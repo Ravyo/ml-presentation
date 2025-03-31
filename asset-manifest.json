@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/ml-presentation/static/js/main.d90bf2cf.js",
+    "static/js/453.e28dcfa8.chunk.js": "/ml-presentation/static/js/453.e28dcfa8.chunk.js",
+    "index.html": "/ml-presentation/index.html",
+    "main.d90bf2cf.js.map": "/ml-presentation/static/js/main.d90bf2cf.js.map",
+    "453.e28dcfa8.chunk.js.map": "/ml-presentation/static/js/453.e28dcfa8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.d90bf2cf.js"
+  ]
+}
