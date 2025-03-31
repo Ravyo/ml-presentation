@@ -1,77 +1,106 @@
 import React from 'react';
-import {
-  Container,
-  Typography,
-  Paper,
-  Grid,
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-} from '@mui/material';
+import { Box, Typography, Grid, Paper, Stepper, Step, StepLabel, StepContent, Button } from '@mui/material';
 import { motion } from 'framer-motion';
+import DataObjectIcon from '@mui/icons-material/DataObject';
+import PsychologyIcon from '@mui/icons-material/Psychology';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import CodeIcon from '@mui/icons-material/Code';
 
-const MotionPaper = motion(Paper);
+const Introduction: React.FC = () => {
+  const [activeStep, setActiveStep] = React.useState(0);
 
-const steps = [
-  {
-    label: 'What is Machine Learning?',
-    description: `Machine Learning is a subset of artificial intelligence that focuses on building systems that can learn from and make decisions based on data. Instead of being explicitly programmed, these systems learn and improve from experience.`,
-  },
-  {
-    label: 'Key Concepts',
-    description: `The fundamental concepts of ML include:
-    • Data: The foundation of ML
-    • Features: Characteristics or attributes of the data
-    • Labels: The target variable we want to predict
-    • Model: The mathematical representation of the relationship between features and labels
-    • Training: The process of learning from data
-    • Testing: Evaluating the model's performance`,
-  },
-  {
-    label: 'The Learning Process',
-    description: `1. Data Collection: Gather relevant data
-    2. Data Preprocessing: Clean and prepare the data
-    3. Feature Engineering: Extract and select important features
-    4. Model Selection: Choose appropriate algorithms
-    5. Training: Fit the model to the data
-    6. Evaluation: Assess model performance
-    7. Deployment: Use the model for predictions`,
-  },
-];
+  const steps = [
+    {
+      label: 'What is Machine Learning?',
+      description: `Machine Learning is a branch of artificial intelligence that focuses on building applications that learn from data and improve their accuracy over time. It enables computers to learn from data and make decisions without being explicitly programmed.`,
+      icon: <PsychologyIcon />
+    },
+    {
+      label: 'Key Components',
+      description: `1. Data: The foundation of ML, including training data, validation data, and test data.
+2. Features: Input variables used to make predictions
+3. Model: The algorithm that learns patterns from the data
+4. Training: The process of learning from data
+5. Evaluation: Assessing model performance
+6. Prediction: Making new predictions on unseen data`,
+      icon: <DataObjectIcon />
+    },
+    {
+      label: 'How it Works',
+      description: `1. Data Collection: Gather relevant data
+2. Data Preprocessing: Clean and prepare data
+3. Feature Engineering: Extract meaningful features
+4. Model Selection: Choose appropriate algorithm
+5. Training: Fit the model to the data
+6. Evaluation: Test model performance
+7. Deployment: Use the model for predictions`,
+      icon: <TimelineIcon />
+    },
+    {
+      label: 'Key Concepts',
+      description: `1. Supervised Learning: Learning from labeled data
+2. Unsupervised Learning: Finding patterns in unlabeled data
+3. Reinforcement Learning: Learning through interaction
+4. Deep Learning: Neural networks with multiple layers
+5. Transfer Learning: Applying knowledge from one task to another`,
+      icon: <CodeIcon />
+    }
+  ];
 
-export default function Introduction() {
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevStep) => prevStep - 1);
+  };
+
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <MotionPaper
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            sx={{ p: 4 }}
-          >
-            <Typography variant="h4" component="h1" gutterBottom>
-              Introduction to Machine Learning
-            </Typography>
-            <Typography variant="subtitle1" color="text.secondary" paragraph>
-              Understanding the fundamentals of ML and its importance in modern technology
-            </Typography>
-          </MotionPaper>
-        </Grid>
+    <Box sx={{ p: 4 }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Typography variant="h3" gutterBottom align="center" sx={{ mb: 4 }}>
+          Introduction to Machine Learning
+        </Typography>
+        <Typography variant="h6" color="text.secondary" paragraph align="center" sx={{ mb: 6 }}>
+          Understanding the fundamentals of machine learning and its core concepts
+        </Typography>
+      </motion.div>
 
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3 }}>
-            <Stepper activeStep={-1} orientation="vertical">
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={8}>
+          <Paper elevation={3} sx={{ p: 3 }}>
+            <Stepper activeStep={activeStep} orientation="vertical">
               {steps.map((step, index) => (
                 <Step key={step.label}>
-                  <StepLabel>
-                    <Typography variant="h6">{step.label}</Typography>
+                  <StepLabel icon={step.icon}>
+                    {step.label}
                   </StepLabel>
                   <StepContent>
-                    <Box sx={{ mb: 2 }}>
-                      <Typography>{step.description}</Typography>
+                    <Typography sx={{ whiteSpace: 'pre-line' }}>
+                      {step.description}
+                    </Typography>
+                    <Box sx={{ mb: 2, mt: 2 }}>
+                      <div>
+                        <Button
+                          variant="contained"
+                          onClick={handleNext}
+                          sx={{ mt: 1, mr: 1 }}
+                          disabled={index === steps.length - 1}
+                        >
+                          {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                        </Button>
+                        <Button
+                          disabled={index === 0}
+                          onClick={handleBack}
+                          sx={{ mt: 1, mr: 1 }}
+                        >
+                          Back
+                        </Button>
+                      </div>
                     </Box>
                   </StepContent>
                 </Step>
@@ -80,48 +109,35 @@ export default function Introduction() {
           </Paper>
         </Grid>
 
-        <Grid item xs={12}>
-          <MotionPaper
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            sx={{ p: 3 }}
+        <Grid item xs={12} md={4}>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Typography variant="h6" gutterBottom>
-              Real-World Applications
-            </Typography>
-            <Typography paragraph>
-              Machine Learning is transforming various industries:
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Healthcare
-                </Typography>
-                <Typography>
-                  Disease diagnosis, drug discovery, and personalized treatment plans
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Finance
-                </Typography>
-                <Typography>
-                  Fraud detection, risk assessment, and algorithmic trading
-                </Typography>
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Typography variant="subtitle1" gutterBottom>
-                  Transportation
-                </Typography>
-                <Typography>
-                  Autonomous vehicles, traffic prediction, and route optimization
-                </Typography>
-              </Grid>
-            </Grid>
-          </MotionPaper>
+            <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+              <Typography variant="h5" gutterBottom>
+                Key Takeaways
+              </Typography>
+              <Typography paragraph>
+                Machine Learning is transforming the way we solve problems by enabling computers to learn from data and make intelligent decisions.
+              </Typography>
+              <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
+                Benefits:
+              </Typography>
+              <ul>
+                <li>Automated decision-making</li>
+                <li>Pattern recognition</li>
+                <li>Scalable solutions</li>
+                <li>Continuous improvement</li>
+                <li>Real-world applications</li>
+              </ul>
+            </Paper>
+          </motion.div>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
-}
+};
+
+export default Introduction;
